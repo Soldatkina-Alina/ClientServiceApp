@@ -1,0 +1,16 @@
+[
+  {
+    "Firstname": "Name1",
+    "Lastname": "Lastname1",
+    "Secondname": "Secondname1",
+    "Birthdaydate": "2000-01-01",
+    "Children": false
+  },
+  {
+    "Firstname": "Name2",
+    "Lastname": "Lastname2",
+    "Secondname": "Secondname2",
+    "Birthdaydate": "2000-01-01",
+    "Children": false
+  }
+]

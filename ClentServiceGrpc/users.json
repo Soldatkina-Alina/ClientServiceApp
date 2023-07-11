@@ -1,0 +1,30 @@
+[
+  {
+    "Firstname": "Name1",
+    "Lastname": "Lastname1",
+    "Secondname": "Secondname1",
+    "Birthdaydate": "2000-01-01",
+    "Children": false
+  },
+  {
+    "Firstname": "Name2",
+    "Lastname": "Lastname2",
+    "Secondname": "Secondname2",
+    "Birthdaydate": "2000-01-01",
+    "Children": false
+  },
+    {
+    "Firstname": "",
+    "Lastname": "Lastname3",
+    "Secondname": "Secondname3",
+    "Birthdaydate": "2004-01-01",
+    "Children": false
+  },
+    {
+    "Firstname": "",
+    "Lastname": "",
+    "Secondname": "",
+    "Birthdaydate": "2004-01-01",
+    "Children": false
+  }
+]
