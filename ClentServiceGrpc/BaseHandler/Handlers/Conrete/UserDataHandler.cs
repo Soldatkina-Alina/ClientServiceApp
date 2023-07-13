@@ -24,22 +24,36 @@ namespace BaseHandler.Handlers.Conrete
 
         public IEnumerable<User> GetAllUsers()
         {
-            throw new NotImplementedException();
+            return _userRepository.GetAll().Select(x => (User)x).ToList();
         }
 
         public User GetUserById(int id)
         {
-            throw new NotImplementedException();
+            return _userRepository.GetById(id);
         }
 
-        public bool Remove(User user)
+        public bool Remove(int id)
         {
-            throw new NotImplementedException();
+            var user = _userRepository.GetById(id);
+            if(user != null)
+            {
+                return _userRepository.Delete(user).Success;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
 
         public bool Update(User user)
         {
-            throw new NotImplementedException();
+            if (GetUserById(user.Id) != null)
+            {
+                return (_userRepository.Save(user)).Success;
+            }
+
+            return false;
         }
     }
 }

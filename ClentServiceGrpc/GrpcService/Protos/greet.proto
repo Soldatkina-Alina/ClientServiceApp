@@ -14,6 +14,9 @@ service Greeter {
     rpc GetAllUserFromFile(GetAllUserFromFieleRequest) returns (ListUserReply);
     rpc AddUserFromFile(GetAllUserFromFieleRequest) returns (CreateUserReply);
     rpc AddUser(UserReply) returns (CreateUserReply);
+    rpc UpdateUser(UserReply) returns (CreateUserReply);
+    rpc GetUserById(GetUserRequest) returns (UserReply);
+    rpc DeleteUser(UserReply) returns (DeleteUserReply);
 }
 
 ///Пользователь
@@ -39,6 +42,7 @@ message GetAllUserFromFieleRequest{
     string path = 1;
 }
 
+
 //Reply
 message ListUserReply{
 	repeated UserReply Users = 1;
@@ -48,5 +52,7 @@ message CreateUserReply{
 	bool succes = 1;
 }
 
-
+message DeleteUserReply{
+	bool succes = 1;
+}
 

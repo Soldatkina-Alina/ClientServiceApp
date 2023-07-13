@@ -52,22 +52,12 @@ namespace GrpcService.Services
             
             var listUsers = module.GetAllUsers().ToList<User>();
 
-            var listUsersReply = listUsers.Select(item => new UserReply
-            {
-                Id = item.Id,
-                FirstName = item.Firstname,
-                Secondname = item.Secondname,
-                Lastname = item.Lastname,
-                Birthdaydate = (item.Birthdaydate == DateOnly.MinValue || item.Birthdaydate == null) ? null : Timestamp.FromDateTimeOffset(new DateTime(item.Birthdaydate.Value.Year, item.Birthdaydate.Value.Month, item.Birthdaydate.Value.Day)), //Timestamp.FromDateTimeOffset(DateTime.Now),
-                Children = item.Children
-            });
-
             listUserReply.Users.AddRange(listUsers.Select(item => new UserReply
             {
                 Id = item.Id,
                 FirstName = item.Firstname,
-                Secondname = item.Secondname,
-                Lastname = item.Lastname,
+                Secondname = item.Secondname ?? string.Empty,
+                Lastname = item.Lastname ?? string.Empty,
                 Birthdaydate = (item.Birthdaydate == DateOnly.MinValue || item.Birthdaydate == null) ? null : Timestamp.FromDateTimeOffset(new DateTime(item.Birthdaydate.Value.Year, item.Birthdaydate.Value.Month, item.Birthdaydate.Value.Day)), //Timestamp.FromDateTimeOffset(DateTime.Now),
                 Children = item.Children
             }));
@@ -86,6 +76,28 @@ namespace GrpcService.Services
             var module = new UserDataHandler(new UserRepository());
 
             return Task.FromResult(new CreateUserReply { Succes = module.Add(new User { Firstname = request.FirstName}) }); 
+        }
+
+        /// <summary>
+        /// Поису пользователя по Id
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public override Task<UserReply> GetUserById(GetUserRequest request, ServerCallContext context)
+        {
+            var module = new UserDataHandler(new UserRepository());
+            var user = module.GetUserById(request.Id);
+
+            return Task.FromResult(new UserReply
+            {
+                Id = user.Id,
+                FirstName = user.Firstname,
+                Secondname = user.Secondname ?? string.Empty,
+                Lastname = user.Lastname ?? string.Empty,
+                Birthdaydate = (user.Birthdaydate == DateOnly.MinValue || user.Birthdaydate == null) ? null : Timestamp.FromDateTimeOffset(new DateTime(user.Birthdaydate.Value.Year, user.Birthdaydate.Value.Month, user.Birthdaydate.Value.Day)),
+                Children = user.Children
+            });
         }
 
         /// <summary>
