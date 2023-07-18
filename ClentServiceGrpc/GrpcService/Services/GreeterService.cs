@@ -74,6 +74,31 @@ namespace GrpcService.Services
         public override Task<CreateUserReply> AddUser(UserReply request, ServerCallContext context)
         {
             var module = new UserDataHandler(new UserRepository());
+<<<<<<< Updated upstream
+=======
+            var result = module.Add(new User
+            {
+                Firstname = request.FirstName,
+                Secondname = request.Secondname ?? null,
+                Lastname = request.Lastname ?? null,
+                Birthdaydate = request.Birthdaydate == null ? null : DateOnly.FromDateTime(request.Birthdaydate.ToDateTime()),
+                Children = request.Children ?? null
+            });
+
+            return Task.FromResult(new CreateUserReply { Succes = result}); 
+        }
+
+        /// <summary>
+        /// Поиск пользователя по Id
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public override Task<UserReply> GetUserById(GetUserRequest request, ServerCallContext context)
+        {
+            var module = new UserDataHandler(new UserRepository());
+            var user = module.GetUserById(request.Id);
+>>>>>>> Stashed changes
 
             return Task.FromResult(new CreateUserReply { Succes = module.Add(new User { Firstname = request.FirstName}) }); 
         }
