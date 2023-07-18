@@ -76,6 +76,7 @@ namespace BaseHandler.Repository.Implementation
                 users = (IEnumerable<User>)result.ResultQuery;
             }
 
+            var r = users;
             return users;
         }
 
