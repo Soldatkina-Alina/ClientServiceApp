@@ -74,8 +74,6 @@ namespace GrpcService.Services
         public override Task<CreateUserReply> AddUser(UserReply request, ServerCallContext context)
         {
             var module = new UserDataHandler(new UserRepository());
-<<<<<<< Updated upstream
-=======
             var result = module.Add(new User
             {
                 Firstname = request.FirstName,
@@ -90,21 +88,6 @@ namespace GrpcService.Services
 
         /// <summary>
         /// Поиск пользователя по Id
-        /// </summary>
-        /// <param name="request"></param>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        public override Task<UserReply> GetUserById(GetUserRequest request, ServerCallContext context)
-        {
-            var module = new UserDataHandler(new UserRepository());
-            var user = module.GetUserById(request.Id);
->>>>>>> Stashed changes
-
-            return Task.FromResult(new CreateUserReply { Succes = module.Add(new User { Firstname = request.FirstName}) }); 
-        }
-
-        /// <summary>
-        /// Поису пользователя по Id
         /// </summary>
         /// <param name="request"></param>
         /// <param name="context"></param>
@@ -136,6 +119,43 @@ namespace GrpcService.Services
             var module = new ReadUserFromJson(new UserRepository(), request.Path);
 
             return Task.FromResult(new CreateUserReply { Succes = module.AddEntity() });
+        }
+
+        /// <summary>
+        /// Удаление пользователя
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public override Task<DeleteUserReply> DeleteUser(DeleteRequest request, ServerCallContext context)
+        {
+            var module = new UserDataHandler(new UserRepository());
+
+            return Task.FromResult(new DeleteUserReply { Succes = module.Remove(request.Id) });
+        }
+
+        /// <summary>
+        /// Обновление пользователя
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public override Task<CreateUserReply> UpdateUser(UserReply request, ServerCallContext context)
+        {
+            var module = new UserDataHandler(new UserRepository());
+            DateOnly d = DateOnly.FromDateTime(request.Birthdaydate.ToDateTime());
+
+            var result = module.Update(new User
+            {
+                Id = request.Id,
+                Firstname = request.FirstName,
+                Secondname = request.Secondname,
+                Lastname = request.Lastname,
+                Birthdaydate = DateOnly.FromDateTime(request.Birthdaydate.ToDateTime()),
+                Children = request.Children
+            });
+
+            return Task.FromResult(new CreateUserReply { Succes = result });
         }
     }
 }

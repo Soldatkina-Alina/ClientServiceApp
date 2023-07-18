@@ -1,3 +1,4 @@
+using Google.Protobuf.WellKnownTypes;
 using GrpcService;
 using GrpcService.Services;
 
@@ -11,14 +12,6 @@ var app = builder.Build();
 app.MapGrpcService<GreeterService>();
 app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 
-<<<<<<< Updated upstream
-var service = new GreeterService(null);
-var users = service.GetListUsers(new Google.Protobuf.WellKnownTypes.Empty(), null);
-var r = users;
-
-=======
-<<<<<<< Updated upstream
-=======
 var service = new GreeterService(null);
 
 //Тестовый вывод всех пользователей
@@ -40,6 +33,4 @@ var users = service.GetListUsers(new Google.Protobuf.WellKnownTypes.Empty(), nul
 //Children = true
 //}, null);
 
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 app.Run();

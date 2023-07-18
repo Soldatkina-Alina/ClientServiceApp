@@ -61,6 +61,8 @@ namespace GrpcService {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::GrpcService.GetUserRequest> __Marshaller_greet_GetUserRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::GrpcService.GetUserRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::GrpcService.DeleteRequest> __Marshaller_greet_DeleteRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::GrpcService.DeleteRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::GrpcService.DeleteUserReply> __Marshaller_greet_DeleteUserReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::GrpcService.DeleteUserReply.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
@@ -112,11 +114,11 @@ namespace GrpcService {
         __Marshaller_greet_UserReply);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::GrpcService.UserReply, global::GrpcService.DeleteUserReply> __Method_DeleteUser = new grpc::Method<global::GrpcService.UserReply, global::GrpcService.DeleteUserReply>(
+    static readonly grpc::Method<global::GrpcService.DeleteRequest, global::GrpcService.DeleteUserReply> __Method_DeleteUser = new grpc::Method<global::GrpcService.DeleteRequest, global::GrpcService.DeleteUserReply>(
         grpc::MethodType.Unary,
         __ServiceName,
         "DeleteUser",
-        __Marshaller_greet_UserReply,
+        __Marshaller_greet_DeleteRequest,
         __Marshaller_greet_DeleteUserReply);
 
     /// <summary>Service descriptor</summary>
@@ -166,7 +168,7 @@ namespace GrpcService {
       }
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::System.Threading.Tasks.Task<global::GrpcService.DeleteUserReply> DeleteUser(global::GrpcService.UserReply request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::GrpcService.DeleteUserReply> DeleteUser(global::GrpcService.DeleteRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -201,7 +203,7 @@ namespace GrpcService {
       serviceBinder.AddMethod(__Method_AddUser, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::GrpcService.UserReply, global::GrpcService.CreateUserReply>(serviceImpl.AddUser));
       serviceBinder.AddMethod(__Method_UpdateUser, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::GrpcService.UserReply, global::GrpcService.CreateUserReply>(serviceImpl.UpdateUser));
       serviceBinder.AddMethod(__Method_GetUserById, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::GrpcService.GetUserRequest, global::GrpcService.UserReply>(serviceImpl.GetUserById));
-      serviceBinder.AddMethod(__Method_DeleteUser, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::GrpcService.UserReply, global::GrpcService.DeleteUserReply>(serviceImpl.DeleteUser));
+      serviceBinder.AddMethod(__Method_DeleteUser, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::GrpcService.DeleteRequest, global::GrpcService.DeleteUserReply>(serviceImpl.DeleteUser));
     }
 
   }

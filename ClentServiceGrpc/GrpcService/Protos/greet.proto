@@ -16,7 +16,7 @@ service Greeter {
     rpc AddUser(UserReply) returns (CreateUserReply);
     rpc UpdateUser(UserReply) returns (CreateUserReply);
     rpc GetUserById(GetUserRequest) returns (UserReply);
-    rpc DeleteUser(UserReply) returns (DeleteUserReply);
+    rpc DeleteUser(DeleteRequest) returns (DeleteUserReply);
 }
 
 ///Пользователь
@@ -42,6 +42,9 @@ message GetAllUserFromFieleRequest{
     string path = 1;
 }
 
+message DeleteRequest{
+    int32 Id = 1;
+}
 
 //Reply
 message ListUserReply{

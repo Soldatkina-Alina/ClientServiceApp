@@ -48,9 +48,15 @@ namespace BaseHandler.Handlers.Conrete
 
         public bool Update(User user)
         {
-            if (GetUserById(user.Id) != null)
+            var userFind = GetUserById(user.Id);
+            if (userFind != null)
             {
-                return (_userRepository.Save(user)).Success;
+                userFind.Firstname = user.Firstname;
+                userFind.Secondname= user.Secondname;
+                userFind.Lastname = user.Lastname;
+                userFind.Birthdaydate = user.Birthdaydate;
+                userFind.Children = user.Children;
+                return (_userRepository.Update(userFind)).Success;
             }
 
             return false;
