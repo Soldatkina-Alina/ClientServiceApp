@@ -1,5 +1,0 @@
-obj\Debug\net6.0/Greet.cs \
-obj\Debug\net6.0/GreetGrpc.cs: C:/Users/alink/.nuget/packages/grpc.tools/2.49.0/build/native/include/google/protobuf/empty.proto\
- C:/Users/alink/.nuget/packages/grpc.tools/2.49.0/build/native/include/google/protobuf/timestamp.proto\
- C:/Users/alink/.nuget/packages/grpc.tools/2.49.0/build/native/include/google/protobuf/wrappers.proto\
- ../../ClentServiceGrpc/GrpcService/Protos/greet.proto

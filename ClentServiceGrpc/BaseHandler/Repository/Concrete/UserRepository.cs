@@ -31,32 +31,6 @@ namespace BaseHandler.Repository.Implementation
         }
 
         /// <summary>
-        /// Добавление пользателя
-        /// </summary>
-        /// <param name="user">Пользователь</param>
-        public DbResponce Update(IEntity entity)
-        {
-            var user = (User)entity;
-            return TryAction(async () =>
-            {
-                using (UserDataBaseContext db = new UserDataBaseContext(_configuration))
-                {
-                    var userFind = db.Users.Find(user.Id);
-                    if (userFind != null)
-                    {
-                        userFind.Firstname = user.Firstname;
-                        userFind.Secondname = user.Secondname;
-                        userFind.Lastname = user.Lastname;
-                        userFind.Birthdaydate = user.Birthdaydate;
-                        userFind.Children = user.Children;
-                       
-                    }
-                    await db.SaveChangesAsync();
-                }
-            });
-        }
-
-        /// <summary>
         /// Удаление пользователя
         /// </summary>
         /// <param name="user">Пользователь</param>
@@ -78,6 +52,15 @@ namespace BaseHandler.Repository.Implementation
         /// <returns>Лист пользователей</returns>
         public IEnumerable<IEntity> GetAll()
         {
+            //Func<IEnumerable<User>> f = () =>
+            //{
+            //    using (UserDataBaseContext db = new UserDataBaseContext(_configuration))
+            //    {
+            //        var users = db.Users.ToList();
+            //        return users;
+            //    }
+            //};
+
             IEnumerable<User> users = new List<User>();
 
             var result = TryFunc(() =>
@@ -104,19 +87,20 @@ namespace BaseHandler.Repository.Implementation
         /// <exception cref="NotImplementedException"></exception>
         public User GetById(int id)
         {
-            User userFind = null;
+            User userFind = new User();
 
             var result = TryFunc(async ()=>
             {
                 using (UserDataBaseContext db = new UserDataBaseContext(_configuration))
                 {
-                    return await db.Users.FindAsync(id);
+                    var user = await db.Users.FindAsync(id);
+                    return user ?? new User();
                 }
             });
 
-            if (result != null && result.ResultQuery != null)
+            if (result.ResultQuery != null)
             {
-                userFind = (User)(((Task<User>)(result.ResultQuery)).Result);
+                userFind = (User)result.ResultQuery;
             }
 
             return userFind;

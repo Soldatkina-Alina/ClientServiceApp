@@ -52,12 +52,22 @@ namespace GrpcService.Services
             
             var listUsers = module.GetAllUsers().ToList<User>();
 
+            var listUsersReply = listUsers.Select(item => new UserReply
+            {
+                Id = item.Id,
+                FirstName = item.Firstname,
+                Secondname = item.Secondname,
+                Lastname = item.Lastname,
+                Birthdaydate = (item.Birthdaydate == DateOnly.MinValue || item.Birthdaydate == null) ? null : Timestamp.FromDateTimeOffset(new DateTime(item.Birthdaydate.Value.Year, item.Birthdaydate.Value.Month, item.Birthdaydate.Value.Day)), //Timestamp.FromDateTimeOffset(DateTime.Now),
+                Children = item.Children
+            });
+
             listUserReply.Users.AddRange(listUsers.Select(item => new UserReply
             {
                 Id = item.Id,
                 FirstName = item.Firstname,
-                Secondname = item.Secondname ?? string.Empty,
-                Lastname = item.Lastname ?? string.Empty,
+                Secondname = item.Secondname,
+                Lastname = item.Lastname,
                 Birthdaydate = (item.Birthdaydate == DateOnly.MinValue || item.Birthdaydate == null) ? null : Timestamp.FromDateTimeOffset(new DateTime(item.Birthdaydate.Value.Year, item.Birthdaydate.Value.Month, item.Birthdaydate.Value.Day)), //Timestamp.FromDateTimeOffset(DateTime.Now),
                 Children = item.Children
             }));
@@ -74,38 +84,8 @@ namespace GrpcService.Services
         public override Task<CreateUserReply> AddUser(UserReply request, ServerCallContext context)
         {
             var module = new UserDataHandler(new UserRepository());
-            var result = module.Add(new User
-            {
-                Firstname = request.FirstName,
-                Secondname = request.Secondname ?? null,
-                Lastname = request.Lastname ?? null,
-                Birthdaydate = request.Birthdaydate == null ? null : DateOnly.FromDateTime(request.Birthdaydate.ToDateTime()),
-                Children = request.Children ?? null
-            });
 
-            return Task.FromResult(new CreateUserReply { Succes = result}); 
-        }
-
-        /// <summary>
-        /// Поису пользователя по Id
-        /// </summary>
-        /// <param name="request"></param>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        public override Task<UserReply> GetUserById(GetUserRequest request, ServerCallContext context)
-        {
-            var module = new UserDataHandler(new UserRepository());
-            var user = module.GetUserById(request.Id);
-
-            return Task.FromResult(new UserReply
-            {
-                Id = user.Id,
-                FirstName = user.Firstname,
-                Secondname = user.Secondname ?? string.Empty,
-                Lastname = user.Lastname ?? string.Empty,
-                Birthdaydate = (user.Birthdaydate == DateOnly.MinValue || user.Birthdaydate == null) ? null : Timestamp.FromDateTimeOffset(new DateTime(user.Birthdaydate.Value.Year, user.Birthdaydate.Value.Month, user.Birthdaydate.Value.Day)),
-                Children = user.Children
-            });
+            return Task.FromResult(new CreateUserReply { Succes = module.Add(new User { Firstname = request.FirstName}) }); 
         }
 
         /// <summary>
@@ -119,43 +99,6 @@ namespace GrpcService.Services
             var module = new ReadUserFromJson(new UserRepository(), request.Path);
 
             return Task.FromResult(new CreateUserReply { Succes = module.AddEntity() });
-        }
-
-        /// <summary>
-        /// Удаление пользователя
-        /// </summary>
-        /// <param name="request"></param>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        public override Task<DeleteUserReply> DeleteUser(DeleteRequest request, ServerCallContext context)
-        {
-            var module = new UserDataHandler(new UserRepository());
-
-            return Task.FromResult(new DeleteUserReply { Succes = module.Remove(request.Id) });
-        }
-
-        /// <summary>
-        /// Обновление пользователя
-        /// </summary>
-        /// <param name="request"></param>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        public override Task<CreateUserReply> UpdateUser(UserReply request, ServerCallContext context)
-        {
-            var module = new UserDataHandler(new UserRepository());
-            DateOnly d = DateOnly.FromDateTime(request.Birthdaydate.ToDateTime());
-
-            var result = module.Update(new User
-            {
-                Id = request.Id,
-                Firstname = request.FirstName,
-                Secondname = request.Secondname,
-                Lastname = request.Lastname,
-                Birthdaydate = DateOnly.FromDateTime(request.Birthdaydate.ToDateTime()),
-                Children = request.Children
-            });
-
-            return Task.FromResult(new CreateUserReply { Succes = result });
         }
     }
 }

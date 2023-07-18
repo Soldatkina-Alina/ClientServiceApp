@@ -32,7 +32,7 @@ namespace BaseHandler.Handlers.Abstract
         /// Удаление пользователя
         /// </summary>
         /// <returns></returns>
-        bool Remove(int id);
+        bool Remove(User user);
 
         /// <summary>
         /// Обновление пользователя

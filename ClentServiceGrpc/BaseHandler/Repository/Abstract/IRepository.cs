@@ -14,8 +14,6 @@ namespace BaseHandler.Repository.Abstract
 
         DbResponce Save(IEntity entity);
 
-        DbResponce Update(IEntity entity);
-
         DbResponce Delete(IEntity entity);
     }
 }

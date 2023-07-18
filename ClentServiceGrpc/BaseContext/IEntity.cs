@@ -8,6 +8,5 @@ namespace BaseContext
 {
     public interface IEntity
     {
-        int Id { get; }
     }
 }
